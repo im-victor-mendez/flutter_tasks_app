@@ -6,7 +6,10 @@ class TasksState extends Equatable {
   const TasksState(this.allTasks);
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [allTasks];
+
+  TasksState copyWith(List<Task>? allTasks) =>
+      TasksState(allTasks ?? this.allTasks);
 }
 
 final class TasksInitial extends TasksState {

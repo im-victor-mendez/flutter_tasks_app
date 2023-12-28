@@ -14,11 +14,11 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
   }
 
   void _onAddTask(AddTask event, Emitter<TasksState> emit) =>
-      emit(TasksState([...state.allTasks, event.task]));
+      emit(state.copyWith([...state.allTasks, event.task]));
 
   // TODO: Fix emit functions
   void _onUpdateTask(UpdateTask event, Emitter<TasksState> emit) =>
-      emit(TasksState([]));
+      emit(const TasksState([]));
   void _onDeleteTask(DeleteTask event, Emitter<TasksState> emit) =>
-      emit(TasksState([]));
+      emit(const TasksState([]));
 }

@@ -16,15 +16,15 @@ class TaskList extends StatelessWidget {
         itemBuilder: (context, index) {
           final task = tasks[index];
 
-          onChanged(bool? value) =>
+          deleteTask() => context.read<TasksBloc>().add(DeleteTask(task));
+
+          addTask(bool? value) =>
               context.read<TasksBloc>().add(UpdateTask(task));
 
           return ListTile(
+            onLongPress: deleteTask,
             title: Text(task.title),
-            trailing: Checkbox(
-              value: task.isDone,
-              onChanged: onChanged,
-            ),
+            trailing: Checkbox(value: task.isDone, onChanged: addTask),
           );
         },
         itemCount: tasks.length,

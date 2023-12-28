@@ -24,7 +24,6 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
     emit(state.copyWith(tasks));
   }
 
-  // TODO: Fix emit functions
   void _onDeleteTask(DeleteTask event, Emitter<TasksState> emit) =>
-      emit(const TasksState([]));
+      emit(state.copyWith(List.from(state.allTasks)..remove(event.task)));
 }

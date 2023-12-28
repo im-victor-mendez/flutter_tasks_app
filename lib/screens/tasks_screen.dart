@@ -1,66 +1,57 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../blocs/bloc/tasks_bloc.dart';
 import '../models/task.dart';
+import '../widgets/task_list.dart';
+import 'add_task_screen.dart';
 
-class TasksScreen extends StatefulWidget {
+class TasksScreen extends StatelessWidget {
   const TasksScreen({super.key});
 
   @override
-  State<TasksScreen> createState() => _TasksScreenState();
-}
-
-class _TasksScreenState extends State<TasksScreen> {
-  List<Task> tasks = [
-    const Task(title: 'Task 1'),
-    const Task(title: 'Task 2'),
-    const Task(title: 'Task 3'),
-  ];
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Tasks App'),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.add),
-          )
-        ],
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Center(
-            child: Chip(
-              label: Text(
-                'Tasks:',
-              ),
-            ),
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemBuilder: (context, index) {
-                final task = tasks[index];
+    return BlocBuilder<TasksBloc, TasksState>(
+      builder: (context, state) {
+        List<Task> tasks = state.allTasks;
 
-                return ListTile(
-                  title: Text(task.title),
-                  trailing: Checkbox(
-                    value: task.isDone,
-                    onChanged: (value) => task.copyWith(isDone: !task.isDone!),
-                  ),
-                );
-              },
-              itemCount: tasks.length,
-            ),
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text('Tasks App'),
+            actions: [
+              IconButton(
+                onPressed: () => showAddTask(context),
+                icon: const Icon(Icons.add),
+              )
+            ],
           ),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        tooltip: 'Add Task',
-        child: const Icon(Icons.add),
-      ),
+          body: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Center(
+                child: Chip(
+                  label: Text(
+                    'Tasks: ${state.allTasks.length}',
+                  ),
+                ),
+              ),
+              TaskList(tasks),
+            ],
+          ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () => showAddTask(context),
+            tooltip: 'Add Task',
+            child: const Icon(Icons.add),
+          ),
+        );
+      },
     );
   }
+
+  void showAddTask(BuildContext context) => showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return AddTaskScreen();
+        },
+      );
 }

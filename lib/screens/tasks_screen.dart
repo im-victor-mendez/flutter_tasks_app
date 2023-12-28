@@ -50,8 +50,6 @@ class TasksScreen extends StatelessWidget {
 
   void showAddTask(BuildContext context) => showModalBottomSheet(
         context: context,
-        builder: (context) {
-          return AddTaskScreen();
-        },
+        builder: (context) => const AddTaskScreen(),
       );
 }

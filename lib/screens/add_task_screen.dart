@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_tasks_app/services/guid_gen.dart';
 
 import '../blocs/bloc/tasks_bloc.dart';
 import '../models/task.dart';
@@ -17,7 +18,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   @override
   Widget build(BuildContext context) {
     void addTask() {
-      final task = Task(title: titleController.text);
+      final task = Task(title: titleController.text, id: GUIDGen.generate());
 
       context.read<TasksBloc>().add(AddTask(task));
       Navigator.pop(context);

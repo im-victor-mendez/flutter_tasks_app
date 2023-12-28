@@ -10,6 +10,14 @@ class TasksState extends Equatable {
 
   TasksState copyWith(List<Task>? allTasks) =>
       TasksState(allTasks ?? this.allTasks);
+
+  Map<String, dynamic> toJson() => {
+        'allTasks': allTasks,
+      };
+
+  TasksState fromJson(Map<String, dynamic> json) => TasksState(
+        List<Task>.from(json['allTasks']?.map((task) => Task.fromJson(task))),
+      );
 }
 
 final class TasksInitial extends TasksState {

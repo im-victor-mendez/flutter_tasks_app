@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_tasks_app/blocs/night_mode_bloc/night_mode_bloc.dart';
+import 'package:flutter_tasks_app/themes/app_theme.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -26,12 +28,24 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => TasksBloc(),
-      child: MaterialApp.router(
-        routerConfig: routerConfig,
-        theme: ThemeData(primarySwatch: Colors.blue),
-        title: 'Flutter Tasks App',
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => TasksBloc()),
+        BlocProvider(create: (context) => NightModeBloc()),
+      ],
+      child: BlocBuilder<NightModeBloc, NightModeState>(
+        builder: (context, state) {
+          final theme = state.isActivated
+              ? AppThemes.appThemeData[AppTheme.darkTheme]
+              : AppThemes.appThemeData[AppTheme.lightTheme];
+
+          return MaterialApp.router(
+            debugShowCheckedModeBanner: false,
+            routerConfig: routerConfig,
+            theme: theme,
+            title: 'Flutter Tasks App',
+          );
+        },
       ),
     );
   }

@@ -73,7 +73,8 @@ class _TabsScreenState extends State<TabsScreen> {
   }
 
   void showAddTask(BuildContext context) => showModalBottomSheet(
-        context: context,
         builder: (context) => const AddTaskScreen(),
+        context: context,
+        isScrollControlled: true,
       );
 }

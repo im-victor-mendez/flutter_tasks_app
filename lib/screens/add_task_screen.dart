@@ -14,11 +14,16 @@ class AddTaskScreen extends StatefulWidget {
 
 class _AddTaskScreenState extends State<AddTaskScreen> {
   final titleController = TextEditingController();
+  final descriptionController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     void addTask() {
-      final task = Task(title: titleController.text, id: GUIDGen.generate());
+      final task = Task(
+        description: descriptionController.text,
+        id: GUIDGen.generate(),
+        title: titleController.text,
+      );
 
       context.read<TasksBloc>().add(AddTask(task));
       Navigator.pop(context);
@@ -39,9 +44,19 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                 autofocus: true,
                 controller: titleController,
                 decoration: const InputDecoration(
-                  labelText: 'Title',
                   border: OutlineInputBorder(),
+                  labelText: 'Title',
                 ),
+              ),
+              const SizedBox(height: 10),
+              TextField(
+                controller: descriptionController,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Description',
+                ),
+                maxLines: 5,
+                minLines: 3,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,

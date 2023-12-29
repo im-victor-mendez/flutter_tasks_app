@@ -5,6 +5,7 @@ import '../blocs/bloc/tasks_bloc.dart';
 import '../models/task.dart';
 import '../widgets/task_list.dart';
 import 'add_task_screen.dart';
+import 'nav_drawer.dart';
 
 class TasksScreen extends StatelessWidget {
   const TasksScreen({super.key});
@@ -16,6 +17,7 @@ class TasksScreen extends StatelessWidget {
         List<Task> tasks = state.allTasks;
 
         return Scaffold(
+          drawer: const NavDrawer(),
           appBar: AppBar(
             title: const Text('Tasks App'),
             actions: [
@@ -25,19 +27,7 @@ class TasksScreen extends StatelessWidget {
               )
             ],
           ),
-          body: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Center(
-                child: Chip(
-                  label: Text(
-                    'Tasks: ${state.allTasks.length}',
-                  ),
-                ),
-              ),
-              TaskList(tasks),
-            ],
-          ),
+          body: _View(tasks),
           floatingActionButton: FloatingActionButton(
             onPressed: () => showAddTask(context),
             tooltip: 'Add Task',
@@ -52,4 +42,25 @@ class TasksScreen extends StatelessWidget {
         context: context,
         builder: (context) => const AddTaskScreen(),
       );
+}
+
+class _View extends StatelessWidget {
+  final List<Task> tasks;
+
+  const _View(this.tasks);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Center(
+          child: Chip(
+            label: Text('Tasks: ${tasks.length}'),
+          ),
+        ),
+        TaskList(tasks),
+      ],
+    );
+  }
 }

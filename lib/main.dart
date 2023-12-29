@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 
-import 'blocs/bloc/tasks_bloc.dart';
+import 'blocs/tasks_bloc/tasks_bloc.dart';
 import 'blocs/bloc_observer.dart';
 import 'routes/router.dart';
 

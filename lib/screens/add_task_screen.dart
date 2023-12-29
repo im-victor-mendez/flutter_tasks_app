@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tasks_app/services/guid_gen.dart';
 
-import '../blocs/bloc/tasks_bloc.dart';
+import '../blocs/tasks_bloc/tasks_bloc.dart';
 import '../models/task.dart';
 
 class AddTaskScreen extends StatefulWidget {

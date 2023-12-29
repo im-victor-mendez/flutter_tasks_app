@@ -24,3 +24,9 @@ class DeleteTask extends TasksEvent {
 
   const DeleteTask(this.task);
 }
+
+class RemoveTask extends TasksEvent {
+  final Task task;
+
+  const RemoveTask(this.task);
+}

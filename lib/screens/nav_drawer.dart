@@ -36,8 +36,10 @@ class NavDrawer extends StatelessWidget {
             ListTile(
               leading: const Icon(Icons.delete_rounded),
               title: const Text('Bin'),
-              // TODO: Fix length indicator
-              trailing: const Text('0'),
+              trailing: BlocBuilder<TasksBloc, TasksState>(
+                builder: (context, state) =>
+                    Text(state.removedTasks.length.toString()),
+              ),
               onTap: () => context.goNamed(RecycleBinScreen.name),
             ),
           ],

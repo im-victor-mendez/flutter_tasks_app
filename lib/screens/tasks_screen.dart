@@ -4,37 +4,39 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../blocs/bloc/tasks_bloc.dart';
 import '../models/task.dart';
 import '../widgets/task_list.dart';
-import 'add_task_screen.dart';
-import 'nav_drawer.dart';
+import 'screens.dart';
 
 class TasksScreen extends StatelessWidget {
+  static const name = 'Tasks';
+  static const path = '/tasks';
+
   const TasksScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<TasksBloc, TasksState>(
-      builder: (context, state) {
-        List<Task> tasks = state.allTasks;
+    final appBar = AppBar(
+      title: const Text('Tasks App'),
+      actions: [
+        IconButton(
+          onPressed: () => showAddTask(context),
+          icon: const Icon(Icons.add),
+        )
+      ],
+    );
 
-        return Scaffold(
-          drawer: const NavDrawer(),
-          appBar: AppBar(
-            title: const Text('Tasks App'),
-            actions: [
-              IconButton(
-                onPressed: () => showAddTask(context),
-                icon: const Icon(Icons.add),
-              )
-            ],
-          ),
-          body: _View(tasks),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () => showAddTask(context),
-            tooltip: 'Add Task',
-            child: const Icon(Icons.add),
-          ),
-        );
-      },
+    final floatingActionButton = FloatingActionButton(
+      onPressed: () => showAddTask(context),
+      tooltip: 'Add Task',
+      child: const Icon(Icons.add),
+    );
+
+    return BlocBuilder<TasksBloc, TasksState>(
+      builder: (context, state) => Scaffold(
+        appBar: appBar,
+        body: _View(state.allTasks),
+        drawer: const NavDrawer(),
+        floatingActionButton: floatingActionButton,
+      ),
     );
   }
 

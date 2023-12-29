@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_tasks_app/blocs/bloc/tasks_bloc.dart';
+import 'package:go_router/go_router.dart';
+
+import '../blocs/bloc/tasks_bloc.dart';
+import 'screens.dart';
 
 class NavDrawer extends StatelessWidget {
   const NavDrawer({super.key});
@@ -23,16 +26,19 @@ class NavDrawer extends StatelessWidget {
             ListTile(
               leading: const Icon(Icons.folder_special_rounded),
               title: const Text('My Tasks'),
-              trailing: Text(
-                context.read<TasksBloc>().state.allTasks.length.toString(),
+              trailing: BlocBuilder<TasksBloc, TasksState>(
+                builder: (context, state) =>
+                    Text(state.allTasks.length.toString()),
               ),
+              onTap: () => context.goNamed(TasksScreen.name),
             ),
             const Divider(),
-            const ListTile(
-              leading: Icon(Icons.delete_rounded),
-              title: Text('Bin'),
+            ListTile(
+              leading: const Icon(Icons.delete_rounded),
+              title: const Text('Bin'),
               // TODO: Fix length indicator
-              trailing: Text('0'),
+              trailing: const Text('0'),
+              onTap: () => context.goNamed(RecycleBinScreen.name),
             ),
           ],
         ),

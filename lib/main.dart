@@ -6,7 +6,7 @@ import 'package:path_provider/path_provider.dart';
 
 import 'blocs/bloc/tasks_bloc.dart';
 import 'blocs/bloc_observer.dart';
-import 'screens/tasks_screen.dart';
+import 'routes/router.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,12 +28,10 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => TasksBloc(),
-      child: MaterialApp(
+      child: MaterialApp.router(
+        routerConfig: routerConfig,
+        theme: ThemeData(primarySwatch: Colors.blue),
         title: 'Flutter Tasks App',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: const TasksScreen(),
       ),
     );
   }

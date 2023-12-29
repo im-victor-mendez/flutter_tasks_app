@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_tasks_app/screens/tabs_screen.dart';
 import 'package:go_router/go_router.dart';
 
 import '../blocs/night_mode_bloc/night_mode_bloc.dart';
@@ -31,9 +32,9 @@ class NavDrawer extends StatelessWidget {
               title: const Text('My Tasks'),
               trailing: BlocBuilder<TasksBloc, TasksState>(
                 builder: (context, state) =>
-                    Text(state.allTasks.length.toString()),
+                    Text(state.pendingTasks.length.toString()),
               ),
-              onTap: () => context.goNamed(TasksScreen.name),
+              onTap: () => context.goNamed(TabsScreen.name),
             ),
             const Divider(),
             // Bin

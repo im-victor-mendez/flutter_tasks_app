@@ -1,14 +1,13 @@
 import 'package:go_router/go_router.dart';
 
-import '../screens/recycle_bin_screen.dart';
-import '../screens/tasks_screen.dart';
+import '../screens/screens.dart';
 
 final routerConfig = GoRouter(
   routes: [
     GoRoute(
-      builder: (context, state) => const TasksScreen(),
-      name: TasksScreen.name,
-      path: TasksScreen.path,
+      builder: (context, state) => const TabsScreen(),
+      name: TabsScreen.name,
+      path: TabsScreen.path,
     ),
     GoRoute(
       builder: (context, state) => const RecycleBinScreen(),
@@ -16,5 +15,5 @@ final routerConfig = GoRouter(
       path: RecycleBinScreen.path,
     ),
   ],
-  initialLocation: TasksScreen.path,
+  initialLocation: TabsScreen.path,
 );

@@ -21,23 +21,30 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
   Map<String, dynamic>? toJson(TasksState state) => state.toJson();
 
   void _onAddTask(AddTask event, Emitter<TasksState> emit) =>
-      emit(state.copyWith(allTasks: [...state.allTasks, event.task]));
+      emit(state.copyWith(pendingTasks: [...state.pendingTasks, event.task]));
 
-  void _onUpdateTask(UpdateTask event, Emitter<TasksState> emit) {
-    final List<Task> tasks = List.from(state.allTasks)..remove(event.task);
+  void _onUpdateTask(UpdateTask event, Emitter<TasksState> emit) =>
+      event.task.isDone!
+          ? emit(state.copyWith(
+              completedTasks: List.from(state.completedTasks)
+                ..remove(event.task),
+              pendingTasks: List.from(state.pendingTasks)
+                ..add(event.task.copyWith(isDone: !event.task.isDone!)),
+            ))
+          : emit(state.copyWith(
+              completedTasks: List.from(state.completedTasks)
+                ..add(event.task.copyWith(isDone: !event.task.isDone!)),
+              pendingTasks: List.from(state.pendingTasks)..remove(event.task),
+            ));
 
-    tasks.insert(state.allTasks.indexOf(event.task),
-        event.task.copyWith(isDone: !event.task.isDone!));
-
-    emit(state.copyWith(allTasks: tasks));
-  }
-
-  void _onDeleteTask(DeleteTask event, Emitter<TasksState> emit) => emit(state
-      .copyWith(removedTasks: List.from(state.allTasks)..remove(event.task)));
+  void _onDeleteTask(DeleteTask event, Emitter<TasksState> emit) =>
+      emit(state.copyWith(
+        removedTasks: List.from(state.pendingTasks)..remove(event.task),
+      ));
 
   void _onRemoveTask(RemoveTask event, Emitter<TasksState> emit) =>
       emit(state.copyWith(
-        allTasks: List.from(state.allTasks)..remove(event.task),
+        pendingTasks: List.from(state.pendingTasks)..remove(event.task),
         removedTasks: List.from(state.removedTasks)
           ..add(event.task.copyWith(isDeleted: true)),
       ));

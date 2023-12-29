@@ -1,28 +1,55 @@
 part of 'tasks_bloc.dart';
 
 class TasksState extends Equatable {
-  final List<Task> allTasks;
+  final List<Task> completedTasks;
+  final List<Task> favoriteTasks;
+  final List<Task> pendingTasks;
   final List<Task> removedTasks;
 
-  const TasksState({required this.allTasks, required this.removedTasks});
+  const TasksState({
+    required this.completedTasks,
+    required this.favoriteTasks,
+    required this.pendingTasks,
+    required this.removedTasks,
+  });
 
   @override
-  List<Object> get props => [allTasks, removedTasks];
+  List<Object> get props => [
+        completedTasks,
+        favoriteTasks,
+        pendingTasks,
+        removedTasks,
+      ];
 
-  TasksState copyWith({List<Task>? allTasks, List<Task>? removedTasks}) =>
+  TasksState copyWith({
+    List<Task>? completedTasks,
+    List<Task>? favoriteTasks,
+    List<Task>? pendingTasks,
+    List<Task>? removedTasks,
+  }) =>
       TasksState(
-        allTasks: allTasks ?? this.allTasks,
+        completedTasks: completedTasks ?? this.completedTasks,
+        favoriteTasks: favoriteTasks ?? this.favoriteTasks,
+        pendingTasks: pendingTasks ?? this.pendingTasks,
         removedTasks: removedTasks ?? this.removedTasks,
       );
 
   Map<String, dynamic> toJson() => {
-        'allTasks': allTasks,
+        'completedTasks': completedTasks,
+        'favoriteTasks': favoriteTasks,
+        'pendingTasks': pendingTasks,
         'removedTasks': removedTasks,
       };
 
   TasksState fromJson(Map<String, dynamic> json) => TasksState(
-        allTasks: List<Task>.from(
-          json['allTasks']?.map((task) => Task.fromJson(task)),
+        completedTasks: List<Task>.from(
+          json['completedTasks']?.map((task) => Task.fromJson(task)),
+        ),
+        favoriteTasks: List<Task>.from(
+          json['favoriteTasks']?.map((task) => Task.fromJson(task)),
+        ),
+        pendingTasks: List<Task>.from(
+          json['pendingTasks']?.map((task) => Task.fromJson(task)),
         ),
         removedTasks: List<Task>.from(
           json['removedTasks']?.map((task) => Task.fromJson(task)),
@@ -33,7 +60,9 @@ class TasksState extends Equatable {
 final class TasksInitial extends TasksState {
   const TasksInitial()
       : super(
-          allTasks: const <Task>[],
+          completedTasks: const <Task>[],
+          favoriteTasks: const <Task>[],
+          pendingTasks: const <Task>[],
           removedTasks: const <Task>[],
         );
 }

@@ -30,3 +30,24 @@ class RemoveTask extends TasksEvent {
 
   const RemoveTask(this.task);
 }
+
+class FavoriteTask extends TasksEvent {
+  final Task task;
+
+  const FavoriteTask(this.task);
+}
+
+class EditTask extends TasksEvent {
+  final Task oldTask;
+  final Task newTask;
+
+  const EditTask(this.oldTask, this.newTask);
+}
+
+class RestoreTask extends TasksEvent {
+  final Task task;
+
+  const RestoreTask(this.task);
+}
+
+class DeleteAllTasks extends TasksEvent {}

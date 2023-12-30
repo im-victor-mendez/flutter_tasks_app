@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 
 import '../blocs/tasks_bloc/tasks_bloc.dart';
 import '../models/task.dart';
+import '../screens/edit_task_screen.dart';
 
 class TaskTile extends StatelessWidget {
   final Task task;
@@ -100,11 +101,11 @@ class _ActionButtons extends StatelessWidget {
             if (task.isDeleted == false) ...[
               // Edit
               PopupMenuItem(
-                onTap: () {},
+                onTap: () => showEditTask(context, task),
                 child: TextButton.icon(
                   icon: const Icon(Icons.edit_rounded),
                   label: const Text('Edit'),
-                  onPressed: null,
+                  onPressed: () => showEditTask(context, task),
                 ),
               ),
             ],
@@ -132,4 +133,10 @@ class _ActionButtons extends StatelessWidget {
       ],
     );
   }
+
+  void showEditTask(BuildContext context, Task task) => showModalBottomSheet(
+        builder: (context) => EditTaskScreen(task),
+        context: context,
+        isScrollControlled: true,
+      );
 }

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_tasks_app/services/guid_gen.dart';
 
 import '../blocs/tasks_bloc/tasks_bloc.dart';
 import '../models/task.dart';
+import '../services/guid_gen.dart';
 
 class AddTaskScreen extends StatefulWidget {
   const AddTaskScreen({super.key});
@@ -20,6 +20,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   Widget build(BuildContext context) {
     void addTask() {
       final task = Task(
+        date: DateTime.now(),
         description: descriptionController.text,
         id: GUIDGen.generate(),
         title: titleController.text,

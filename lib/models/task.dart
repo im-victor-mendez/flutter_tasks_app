@@ -48,7 +48,7 @@ class Task extends Equatable {
       );
 
   Map<String, dynamic> toJson() => {
-        'date': date,
+        'date': date.toString(),
         'description': description,
         'id': id,
         'isDeleted': isDeleted,
@@ -58,7 +58,7 @@ class Task extends Equatable {
       };
 
   static Task fromJson(Map<String, dynamic> json) => Task(
-        date: json['date'] ?? DateTime.now(),
+        date: DateTime.parse(json['date']),
         description: json['description'] ?? '',
         id: json['id'] ?? '',
         isDeleted: json['isDeleted'],

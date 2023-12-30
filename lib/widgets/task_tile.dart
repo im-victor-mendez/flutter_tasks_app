@@ -87,6 +87,8 @@ class _ActionButtons extends StatelessWidget {
         ? context.read<TasksBloc>().add(DeleteTask(task))
         : context.read<TasksBloc>().add(RemoveTask(task));
 
+    restoreTask() => context.read<TasksBloc>().add(RestoreTask(task));
+
     return Row(
       children: [
         // Toggle #isDone
@@ -109,6 +111,16 @@ class _ActionButtons extends StatelessWidget {
                 ),
               ),
             ],
+            if (task.isDeleted!)
+              // Restore
+              PopupMenuItem(
+                onTap: restoreTask,
+                child: TextButton.icon(
+                  icon: const Icon(Icons.restore_rounded),
+                  label: const Text('Restore'),
+                  onPressed: null,
+                ),
+              ),
             // Delete
             PopupMenuItem(
               onTap: deleteTask,
@@ -118,16 +130,6 @@ class _ActionButtons extends StatelessWidget {
                 onPressed: null,
               ),
             ),
-            if (task.isDeleted!)
-              // Restore
-              PopupMenuItem(
-                onTap: () {},
-                child: TextButton.icon(
-                  icon: const Icon(Icons.restore_rounded),
-                  label: const Text('Restore'),
-                  onPressed: null,
-                ),
-              ),
           ],
         ),
       ],
